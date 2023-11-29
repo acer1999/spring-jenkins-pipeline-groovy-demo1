@@ -251,6 +251,7 @@
                 <version>3.9.1.2184</version>
             </plugin>
 		</plugins>
+		<finalName>spring-jenkins-pipeline-groovy-demo1</finalName>
 	</build>
 
 </project>
