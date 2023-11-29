@@ -66,8 +66,7 @@ pipeline {
             
         
 }
-pipeline {
-    agent any
+
 
     environment {
         DOCKER_IMAGE_NAME = 'my-docker-image'
