@@ -125,8 +125,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE_NAME = 'my-docker-image'
-        DOCKER_CONTAINER_NAME = 'my-docker-container'
+        DOCKER_IMAGE_NAME = 'nginx'
+        DOCKER_CONTAINER_NAME = 'minikube'
     }
 
     stages {
@@ -134,7 +134,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image
-                    sh "docker build -t ${DOCKER_IMAGE_NAME} ."
+                    sh "docker build -t ${nginx} ."
                 }
             }
         }
@@ -143,7 +143,7 @@ pipeline {
             steps {
                 script {
                     // Run Docker container
-                    sh "docker run --name ${DOCKER_CONTAINER_NAME} -d -p 8080:80 ${DOCKER_IMAGE_NAME}"
+                    sh "docker run --name ${minikube} -d -p 8080:80 ${nginx}"
                 }
             }
         }
@@ -161,9 +161,9 @@ pipeline {
         always {
             script {
                 // Clean up - stop and remove container, remove image
-                sh "docker stop ${DOCKER_CONTAINER_NAME} || true"
-                sh "docker rm ${DOCKER_CONTAINER_NAME} || true"
-                sh "docker rmi ${DOCKER_IMAGE_NAME} || true"
+                sh "docker stop ${minikube} || true"
+                sh "docker rm ${minikube} || true"
+                sh "docker rmi ${nginx} || true"
             }
         }
     }
