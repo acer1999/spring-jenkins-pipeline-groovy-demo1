@@ -1,6 +1,10 @@
 pipeline {
     agent any
-    
+
+    environment {
+        DOCKER_IMAGE_NAME = 'my-docker-image'
+        DOCKER_CONTAINER_NAME = 'my-docker-container'
+    }
    
 
     tools {
@@ -25,8 +29,27 @@ pipeline {
                  }
             }
             }
-            
-           
+
+	stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build Docker image
+                    sh "docker build -t ${DOCKER_IMAGE_NAME} ."
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Run Docker container
+                    sh "docker run --name ${DOCKER_CONTAINER_NAME} -d -p 8080:80 ${DOCKER_IMAGE_NAME}"
+                }
+            }
+        }
+    }
+
            
          stage('Integration Test') {
             steps {
@@ -68,31 +91,10 @@ pipeline {
 }
 
 
-    environment {
-        DOCKER_IMAGE_NAME = 'my-docker-image'
-        DOCKER_CONTAINER_NAME = 'my-docker-container'
-    }
+   
 
-    stages {
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Build Docker image
-                    sh "docker build -t ${DOCKER_IMAGE_NAME} ."
-                }
-            }
-        }
-
-        stage('Run Docker Container') {
-            steps {
-                script {
-                    // Run Docker container
-                    sh "docker run --name ${DOCKER_CONTAINER_NAME} -d -p 8080:80 ${DOCKER_IMAGE_NAME}"
-                }
-            }
-        }
-    }
-
+    
+    
     post {
         success {
             echo "Docker image built and container running successfully!"
