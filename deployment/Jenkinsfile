@@ -3,6 +3,7 @@ pipeline {
 	environment{
 		dockerImage=''
 		registry='himanshu1502/spring-jenkins-pipeline-groovy-demo1-1.0'
+		DOCKERHUB_CREDENTIALS=credentials('himanshu1502')
 	}
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
@@ -56,16 +57,19 @@ pipeline {
                 }
             }
         }
-	    stage('Deploy Docker Image'){
-		    steps{
-			    script{
-				    withCredentials([string(credentialsId: 'himanshu1502', variable: 'dockerhubpwd')]){
-					    sh 'docker login -u himanshu1502 -p ${dockerhubpwd}'
-				    }
-				    sh 'docker push himanshu1502/spring-jenkins-pipeline-groovy-demo1-1.0'
-			    }
-		    }
-	    }
+	    stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				sh 'docker push himanshu1502/spring-jenkins-pipeline-groovy-demo1-1.0'
+			}
+		}
 
 	    
     }
