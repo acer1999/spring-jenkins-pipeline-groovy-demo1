@@ -62,7 +62,7 @@ pipeline {
 		 steps{
 			 script{
 				 withDockerRegistry(credentialsId: 'myid', toolName: 'docker') {
-    			sh "docker push spring-jenkins-pipeline-groovy-demo1"
+    			sh "docker push dockerImage"
 }
 			 }
 		 }
