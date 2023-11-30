@@ -1,6 +1,8 @@
 pipeline {
     agent any
 	environment{
+		dockerImage = ''
+        	registry = 'himanshu1502/spring-jenkins-pipeline-groovy-demo1-1.0'
 		DOCKERHUB_CREDENTIALS=credentials('himanshu1502')
 	}
     tools {
@@ -51,7 +53,7 @@ pipeline {
 	 stage('Build docker image'){
             steps{
                 script{
-			sh 'docker build -t himanshu1502/spring-jenkins-pipeline-groovy-demo1-1.0 .'
+			dockerImage = docker.build registry
                 }
             }
         }
