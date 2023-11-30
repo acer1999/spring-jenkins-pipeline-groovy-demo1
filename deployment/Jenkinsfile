@@ -1,11 +1,5 @@
 pipeline {
     agent any
-      environment{
-        dockerImage = ''
-        registry = 'himanshu1502/spring-jenkins-pipeline-groovy-demo1-1.0'
-    }
-   
-
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "mvn"
@@ -54,15 +48,15 @@ pipeline {
 	 stage('Build and Publish docker image'){
             steps{
                 script{
-			dockerImage = docker.build registry
+			sh 'docker build -t himanshu1502/spring-jenkins-pipeline-groovy-demo1-1.0'
                 }
             }
         }
 	    stage('Deploy Docker Image'){
 		    steps{
 			    script{
-				    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]){
-					    sh 'docker login -u himanshu1502 -p ${Himanshu@1234321}'
+				    withCredentials([string(credentialsId: 'himanshu1502', variable: 'dockerhubpwd')]){
+					    sh 'docker login -u himanshu1502 -p ${dockerhubpwd}'
 				    }
 				    sh 'docker push himanshu1502/spring-jenkins-pipeline-groovy-demo1-1.0'
 			    }
