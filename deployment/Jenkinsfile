@@ -51,22 +51,16 @@ pipeline {
     	
     	
     
-	 stage('Build docker image'){
+	 stage('Build and Publish docker image'){
             steps{
                 script{
-                    dockerImage = docker.build registry
+			withDockerRegistry(credentialsId: 'myid', toolName: 'docker') {
+                    	dockerImage = docker.build registry
+			sh "docker push dockerImage"
+			}
                 }
             }
         }
-	 stage('Publish docker image'){
-		 steps{
-			 script{
-				 withDockerRegistry(credentialsId: 'myid', toolName: 'docker') {
-    			sh "docker push dockerImage"
-}
-			 }
-		 }
-	 }
 
 	    
     }
