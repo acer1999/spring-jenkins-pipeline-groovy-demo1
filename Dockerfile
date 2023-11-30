@@ -1,4 +1,6 @@
-FROM openjdk:8
-EXPOSE 8080
-ADD target/spring-jenkins-pipeline-groovy-demo1.jar spring-jenkins-pipeline-groovy-demo1.jar
-ENTRYPOINT ["java","-jar","/spring-jenkins-pipeline-groovy-demo1.jar"]
+FROM eclipse-temurin:17
+RUN mkdir -p /app
+WORKDIR /app
+VOLUME [ "/tmp" ]
+COPY target/*.jar app.jar
+ENTRYPOINT [ "java","-jar","/app/app.jar"]
