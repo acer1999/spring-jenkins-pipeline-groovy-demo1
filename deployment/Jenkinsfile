@@ -45,7 +45,7 @@ pipeline {
     	
     	
     
-	 stage('Build and Publish docker image'){
+	 stage('Build and docker image'){
             steps{
                 script{
 			sh 'docker build -t himanshu1502/spring-jenkins-pipeline-groovy-demo1-1.0'
