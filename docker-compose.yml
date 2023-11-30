@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  java-app:  
+    image: kpradeep/spring-app:1.0
+    volumes:
+    - app-data:/var/bin
+    ports:
+    - 5001:8888
+    networks:
+    - ibm-network
+  mongodb:
+    image: mongo:6-jammy
+    ports:
+      - '27017:27017'
+    volumes:
+      - app-data:/data/db 
+    networks:
+    - ibm-network  
+volumes:
+ app-data:
+
+networks:
+  ibm-network:
+ 
+ 
