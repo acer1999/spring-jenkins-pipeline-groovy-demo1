@@ -56,7 +56,7 @@ pipeline {
                 script{
 			withDockerRegistry(credentialsId: 'myid', toolName: 'docker') {
                     	dockerImage = docker.build registry
-			sh "docker push dockerImage"
+			sh "docker push"
 			}
                 }
             }
