@@ -47,11 +47,15 @@ pipeline {
     	
     
 	 stage('Build docker image'){
+		 script{
             app=docker.build("himanshu1502/myapp")
+		 }
         }
 	    stage('Test image'){
+		    script{
 		    app.inside{
 			    sh 'echo"Test passed"'
+		    }
 		    }
 	    }
 
