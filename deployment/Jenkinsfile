@@ -53,15 +53,7 @@ pipeline {
 		 }
 		 }
         }
-	    stage('Test image'){
-		    steps{
-		    script{
-		    app.inside{
-			    sh 'echo"Test passed"'
-		    }
-		    }
-		    }
-	    }
+	  
 
 	stage('Push') {
 		steps{
