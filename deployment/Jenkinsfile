@@ -47,8 +47,10 @@ pipeline {
     	
     
 	 stage('Build docker image'){
+		 steps{
 		 script{
             app=docker.build("himanshu1502/myapp")
+		 }
 		 }
         }
 	    stage('Test image'){
