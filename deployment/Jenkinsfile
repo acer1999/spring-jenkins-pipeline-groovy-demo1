@@ -59,7 +59,7 @@ pipeline {
 		steps{
 			script{
 		docker.withRegistry('https://registry.hub.docker.com', 'dockerid') {
-		app.push("himanshu1502/myapp:latest")
+		app.push("myapp:latest")
  		
 		}
 			}
