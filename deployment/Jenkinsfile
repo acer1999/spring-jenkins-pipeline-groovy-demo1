@@ -67,7 +67,7 @@ pipeline {
 		stage('Push') {
 
 			steps {
-				sh 'docker push himanshu1502/spring-jenkins-pipeline-groovy-demo1-1.0'
+				sh 'docker push himanshu1502/spring-jenkins-pipeline-groovy-demo1-1.0:latest'
 			}
 		}
 
