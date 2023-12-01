@@ -1,8 +1,6 @@
 pipeline {
     agent any
-	environment{
-		DOCKERHUB_CREDENTIALS=credentials('himanshu1502')
-	}
+	
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "mvn"
@@ -49,22 +47,18 @@ pipeline {
     	
     
 	 stage('Build docker image'){
-            steps{
-                sh 'docker build -t himanshu1502/myimage .'
-            }
+            app=docker.build("himanshu1502/myapp")
         }
-	    stage('Login') {
+	    stage('Test image'){
+		    app.inside{
+			    sh 'echo"Test passed"'
+		    }
+	    }
 
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
-
-		stage('Push') {
-
-			steps {
-				sh 'docker push himanshu1502/myimage:latest'
-			}
+	stage('Push') {
+		docker.withRegistry('https://registry.hub.docker.com', 'himanshu1502') {
+		app.push("himanshu1502/myapp")
+ 		app.push("latest")
 		}
 
 	    
